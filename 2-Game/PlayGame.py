@@ -17,10 +17,14 @@ class PlayGame:
         game = KonaneGame()
         game2 = KonaneGame2()
         initial_board = Board(size, game.initialize_board(size))
-        agent1 = Agent(game2, color=Tile.P_Black, max_depth=4)
-        agent2 = Agent(game, color=Tile.P_White, max_depth=5)
-        # bot vs bot
+        agent1 = Agent(game, color=Tile.P_Black, max_depth=2)
+        agent2 = Agent(game, color=Tile.P_White, max_depth=4)
+        # # bot vs bot
         play = PlayKonane(initial_board, game, agent1=agent1, agent2=agent2)
+        # print(initial_board.size)
+        # print(initial_board[2][2])
+        # print(list(initial_board.game_board))
+        # print(initial_board.game_board[2][5].piece)
 
         # player vs bot
         # play = PlayKonane(initial_board, game, agent1=agent2)

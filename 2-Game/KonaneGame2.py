@@ -1,5 +1,5 @@
 from Tile import Tile
-
+from Board import Board
 class KonaneGame2:
     def __init__(self):
         NotImplemented
@@ -131,14 +131,37 @@ class KonaneGame2:
     def evaluate(self, board, color, terminal_value = 0):
         
         value = 0
-        valid_moves_color = self.generate_all_possible_moves(board, color)
-        valid_moves_opponent = self.generate_all_possible_moves(board, self.opponent(color))
-        valid_moves_at_tile = self.get_moves_at_tile(board, Tile(2,0,0,0), color)
-        value += (10 * len(valid_moves_color))
-        value -= (10 * len(valid_moves_opponent))
-        value += len(valid_moves_at_tile)
+        # valid_moves_color = self.generate_all_possible_moves(board, color)
+        # valid_moves_opponent = self.generate_all_possible_moves(board, self.opponent(color))
+        # valid_moves_at_tile = self.get_moves_at_tile(board, Tile(color,0,0,0), color)
+        # valid_moves_at_tile_opponent = self.get_moves_at_tile(board, Tile(color,0,0,0), self.opponent(color))
+        # value += (1 * len(valid_moves_color))
+        # value -= (1 * len(valid_moves_opponent))
+        # value += 10 * len(valid_moves_at_tile)
+        # value -= 10 * len(valid_moves_at_tile_opponent)
+        size = board.size
+        # my_play = 0
+        # opponent_play = 0
+        # for i in range(size):
+        #     for j in range(size):
+        #         if board.game_board[i][j].piece == color:
+        #             my_play += 1
+        #         elif board.game_board[i][j].piece == self.opponent(color):
+        #             opponent_play += 1
+        
+        # value += 3*(my_play - opponent_play)
 
-        value += terminal_value
+        for i in range(size):
+            for j in range(size):
+                if board.game_board[i][j].piece == color:
+                    value += 20 * len(self.get_moves_at_tile(board, Tile(color,0,i,j), color))
+                elif board.game_board[i][j].piece == self.opponent(color):
+                    value -= 20 * len(self.get_moves_at_tile(board, Tile(color,0,i,j), color))
+
+        # for i in range(1, size-1):
+        #     for j in range(1, size-1):
+        #         if board.game_board[i][j].piece == 0:
+        #             value += 5
 
         return value
 

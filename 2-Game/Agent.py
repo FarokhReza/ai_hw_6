@@ -22,8 +22,8 @@ class Agent:
         #     return None, self.game.evaluate(current_board, current_color, -100000)
         
         if self.game.check_terminal(current_board, current_color):
-            return None, self.game.evaluate(current_board, current_color, -100000)
-
+            return None, self.game.evaluate(current_board, current_color, -1000)
+            
         # estimate the evaluate func score in maximum depth
         if depth == self.max_depth:
             return None, self.game.evaluate(current_board, current_color)
@@ -51,7 +51,7 @@ class Agent:
    
     def min_value(self, current_board, current_color, depth, alpha, beta):
         if self.game.check_terminal(current_board, current_color):
-            return None, self.game.evaluate(current_board, current_color, -100000)
+            return None, self.game.evaluate(current_board, current_color, -1000)
         
         if depth == self.max_depth:
             return None, self.game.evaluate(current_board, current_color)
@@ -61,7 +61,7 @@ class Agent:
         moves = self.game.generate_all_possible_moves(current_board, current_color)
         for move in moves:
             new_board = current_board.next_board(current_color, move)
-            _, new_value = self.max_value(new_board, self.game.opponent(current_color), depth+1, alpha, beta)
+            _, new_value = self.max_value(new_board, current_color, depth+1, alpha, beta)
             
             if new_value < value:
                 best_move = move
